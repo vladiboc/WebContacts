@@ -1,0 +1,18 @@
+@font-face {
+    font-family: LiberationSerif;
+    src: url("../fonts/LiberationSerif.woff2") format("woff2"), url("../fonts/LiberationSerif.woff") format("woff");
+}
+
+body {
+    font-family: LiberationSerif;
+    margin: 0 5px;
+}
+
+#debug_info {
+    font-size: 120%;
+}
+
+h4 {
+    margin: 0;
+    padding: 0;
+}
