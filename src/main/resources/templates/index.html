@@ -3,8 +3,8 @@
     <head>
         <title>Web Contacts</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link type="text/css" rel="stylesheet" href="css/index.css" />
-        <link href="favicons/java.png" rel="shortcut icon" type="image/x-icon" />
+        <link type="text/css" rel="stylesheet" href="/css/index.css" />
+        <link href="/favicons/java.png" rel="shortcut icon" type="image/x-icon" />
     </head>
     <body>
         <h1>Список контактов</h1>
@@ -17,19 +17,21 @@
                 <div class="head cell phone">Телефон</div>
                 <hr>
             </div>
-            <div class="row" th:each="contact : ${contacts}">
-                <div class="cell id" th:text="${contact.id}"></div>
-                <div class="cell name" th:text="${contact.firstName}"></div>
-                <div class="cell surname" th:text="${contact.lastName}"></div>
-                <div class="cell email" th:text="${contact.email}"></div>
-                <div class="cell phone" th:text="${contact.phone}"></div>
+            <div th:each="contact : ${contacts}">
+                <div class="row">
+                    <div class="cell id" th:text="${contact.id}"></div>
+                    <div class="cell name" th:text="${contact.firstName}"></div>
+                    <div class="cell surname" th:text="${contact.lastName}"></div>
+                    <div class="cell email" th:text="${contact.email}"></div>
+                    <div class="cell phone" th:text="${contact.phone}"></div>
+                </div>
+                <!--            <a th:href="@{/contact/edit/{id}(id=${contact.id})}"><div class="button edit">Изменить</div></a>-->
+                <!--            <a th:href="@{/contact/edit/{id}(id=${contact.id})}"><div class="button delete">Удалить</div></a>-->
+                <a href="#"><div class="button edit">Изменить</div></a>
+                <a href="#"><div class="button delete">Удалить</div></a>
             </div>
-            <a href="#"><div class="button edit">Изменить</div></a>
-            <a href="#"><div class="button delete">Удалить</div></a>
-<!--            <a th:href="@{/contact/edit/{id}(id=${contact.id})}"><div class="button edit">Изменить</div></a>-->
-<!--            <a th:href="@{/contact/edit/{id}(id=${contact.id})}"><div class="button delete">Удалить</div></a>-->
             <div class="row">
-                <a href="#"><div class="button new">Добавить новый контакт</div></a>
+                <a th:href="@{/contact/create}"><div class="button new">Добавить новый контакт</div></a>
             </div>
         </div>
     </body>
