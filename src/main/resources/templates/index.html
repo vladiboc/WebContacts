@@ -25,10 +25,8 @@
                     <div class="cell email" th:text="${contact.email}"></div>
                     <div class="cell phone" th:text="${contact.phone}"></div>
                 </div>
-                <!--            <a th:href="@{/contact/edit/{id}(id=${contact.id})}"><div class="button edit">Изменить</div></a>-->
-                <!--            <a th:href="@{/contact/edit/{id}(id=${contact.id})}"><div class="button delete">Удалить</div></a>-->
-                <a href="#"><div class="button edit">Изменить</div></a>
-                <a href="#"><div class="button delete">Удалить</div></a>
+                <a th:href="@{/contact/edit/{id}(id=${contact.id})}"><div class="button edit">Изменить</div></a>
+                <a th:href="@{/contact/delete/{id}(id=${contact.id})}"><div class="button delete">Удалить</div></a>
             </div>
             <div class="row">
                 <a th:href="@{/contact/create}"><div class="button new">Добавить новый контакт</div></a>

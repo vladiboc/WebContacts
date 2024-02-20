@@ -1,59 +1,97 @@
 package org.example.webcontacts.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.example.webcontacts.data.Contact;
 import org.example.webcontacts.exception.IllegalFieldException;
+import org.example.webcontacts.service.ContactService;
 import org.example.webcontacts.util.Checkers;
 import org.example.webcontacts.util.InfoMsg;
+import org.example.webcontacts.util.ThKeys;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
+@RequiredArgsConstructor
 public class ContactController {
-  private final List<Contact> contacts = new ArrayList<>();
+  private final ContactService contactService;
 
-  // TODO убрать этот блок инициалицации после подключения БД
-  {
-    this.contacts.add(new Contact(0, "Иван", "Иванов", "ivanov@mail.ru", "+70001234567"));
-    this.contacts.add(new Contact(0, "Ия", "Обст", "ia@mail.ru", "+70001234567"));
-  }
   @GetMapping("/")
   public String index(Model model) {
-    model.addAttribute("contacts", this.contacts);
-
-    return "index";
+    model.addAttribute(ThKeys.ALL_CONTACTS_KEY, this.contactService.findAll());
+    return ThKeys.INDEX;
   }
 
   @GetMapping("/contact/create")
   public String showCreateForm(Model model) {
-    model.addAttribute("form_name", InfoMsg.CREATION_FORM);
-    if (model.getAttribute("contact") == null) {
-      model.addAttribute("contact", new Contact());
-      model.addAttribute("message", InfoMsg.CREATE_CONTACT);
+    if (model.getAttribute(ThKeys.CONTACT_KEY) == null) {
+      model.addAttribute(ThKeys.CONTACT_KEY, new Contact());
+      model.addAttribute(ThKeys.MESSAGE_KEY, InfoMsg.CREATE_CONTACT);
     }
-
-    return "create_edit";
+    return this.initCreateForm(model);
   }
 
   @PostMapping("/contact/create")
   public String createTask(@ModelAttribute Contact contact, Model model) {
     // TODO убрать эти секунды после подключния БД
-    contact.setId((int) (System.currentTimeMillis() / 1000L));
+    contact.setId((int)(Math.random() * 1000));
     try {
       Checkers.checkHtmlInputFields(contact);
     } catch (IllegalFieldException e) {
-      model.addAttribute("form_name", InfoMsg.CREATION_FORM);
-      model.addAttribute("message", e.getMessage());
-      return "create_edit";
+      model.addAttribute(ThKeys.MESSAGE_KEY, e.getMessage());
+      return this.initCreateForm(model);
     }
-    this.contacts.add(contact);
+    this.contactService.add(contact);
+    return ThKeys.REDIRECT_TO_ROOT_PAGE;
+  }
 
-    return "redirect:/";
+  @GetMapping("/contact/edit/{id}")
+  public String showEditForm(@PathVariable int id, Model model) {
+    Contact contact = this.contactService.findById(id);
+    if (contact != null) {
+      model.addAttribute(ThKeys.CONTACT_KEY, contact);
+      model.addAttribute(ThKeys.MESSAGE_KEY, InfoMsg.EDIT_CONTACT);
+      return this.initEditForm(model);
+    }
+    return ThKeys.REDIRECT_TO_ROOT_PAGE;
+  }
+
+  @PostMapping("/contact/edit")
+  public String editTask(@ModelAttribute Contact contact, Model model) {
+    try {
+      Checkers.checkHtmlInputFields(contact);
+    } catch (IllegalFieldException e) {
+      model.addAttribute(ThKeys.MESSAGE_KEY, e.getMessage());
+      return this.initEditForm(model);
+    }
+    Contact targetContact = this.contactService.findById(contact.getId());
+    if (targetContact != null) {
+      this.contactService.update(contact, targetContact);
+    }
+    return ThKeys.REDIRECT_TO_ROOT_PAGE;
+  }
+
+  @GetMapping("/contact/delete/{id}")
+  public String deleteContact(@PathVariable int id) {
+    Contact targetContact = this.contactService.findById(id);
+    if (targetContact != null) {
+      this.contactService.delete(targetContact);
+    }
+    return ThKeys.REDIRECT_TO_ROOT_PAGE;
+  }
+
+  private String initCreateForm(Model model) {
+    model.addAttribute(ThKeys.FORM_NAME_KEY, InfoMsg.CREATION_FORM);
+    model.addAttribute(ThKeys.FORM_ACTION_KEY, ThKeys.ACTION_CREATE);
+    return ThKeys.CREATE_EDIT_FORM;
+  }
+  private String initEditForm(Model model) {
+    model.addAttribute(ThKeys.FORM_NAME_KEY, InfoMsg.EDITING_FORM);
+    model.addAttribute(ThKeys.FORM_ACTION_KEY, ThKeys.ACTION_EDIT);
+    return ThKeys.CREATE_EDIT_FORM;
   }
 
 }

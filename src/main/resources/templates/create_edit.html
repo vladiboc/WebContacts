@@ -9,7 +9,8 @@
     <body>
         <h1 th:utext="${form_name}"></h1>
         <div id="form">
-            <form action="/contact/create" method="post">
+            <form th:action="${form_action}" method="post">
+                <input type="hidden" id="id" name="id" th:value="${contact.id}">
                 <div class="label"><label for="name">Имя:</label></div>
                 <div class="input_field">
                     <input type="text" id="name" name="firstName" required th:value="${contact.firstName}">
