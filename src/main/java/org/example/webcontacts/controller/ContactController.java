@@ -36,15 +36,13 @@ public class ContactController {
 
   @PostMapping("/contact/create")
   public String createTask(@ModelAttribute Contact contact, Model model) {
-    // TODO убрать эти секунды после подключния БД
-    contact.setId((int)(Math.random() * 1000));
     try {
       Checkers.checkHtmlInputFields(contact);
     } catch (IllegalFieldException e) {
       model.addAttribute(ThKeys.MESSAGE_KEY, e.getMessage());
       return this.initCreateForm(model);
     }
-    this.contactService.add(contact);
+    this.contactService.save(contact);
     return ThKeys.REDIRECT_TO_ROOT_PAGE;
   }
 
@@ -67,19 +65,13 @@ public class ContactController {
       model.addAttribute(ThKeys.MESSAGE_KEY, e.getMessage());
       return this.initEditForm(model);
     }
-    Contact targetContact = this.contactService.findById(contact.getId());
-    if (targetContact != null) {
-      this.contactService.update(contact, targetContact);
-    }
+    this.contactService.update(contact);
     return ThKeys.REDIRECT_TO_ROOT_PAGE;
   }
 
   @GetMapping("/contact/delete/{id}")
   public String deleteContact(@PathVariable int id) {
-    Contact targetContact = this.contactService.findById(id);
-    if (targetContact != null) {
-      this.contactService.delete(targetContact);
-    }
+    this.contactService.deleteById(id);
     return ThKeys.REDIRECT_TO_ROOT_PAGE;
   }
 

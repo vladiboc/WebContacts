@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+// TODO убрать всеконструктор после уборки инищиалицации в менеджере (сервисе)
 @AllArgsConstructor
 public class Contact {
     private int id;
