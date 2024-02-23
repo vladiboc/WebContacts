@@ -10,6 +10,7 @@ public class ErrorMsg {
       "Емейл задан некорректно!" + RED_FINISH;
   public static final String ILLEGAL_PHONE = RED_START +
       "Телефон должен начинаться с +7 и содержать дополнительно только 10 цифр!" + RED_FINISH;
+  public static final String CONTACT_NOT_FOUND = "Не найден контакт с номером: ";
 
   private ErrorMsg() {}
 

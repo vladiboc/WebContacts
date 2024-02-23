@@ -1,5 +1,6 @@
 package org.example.webcontacts.repository;
 
+import jakarta.annotation.Nullable;
 import org.example.webcontacts.data.Contact;
 import org.springframework.stereotype.Repository;
 

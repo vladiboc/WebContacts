@@ -3,11 +3,10 @@ package org.example.webcontacts.data;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
 
 @Data
-@NoArgsConstructor
-// TODO убрать всеконструктор после уборки инищиалицации в менеджере (сервисе)
-@AllArgsConstructor
+@FieldNameConstants
 public class Contact {
     private int id;
     private String firstName;

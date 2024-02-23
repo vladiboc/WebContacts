@@ -15,21 +15,15 @@ public class RamContactRepository implements ContactRepository {
   private final List<Contact> contacts = new ArrayList<>();
   private int lastId = 1;
 
-  // TODO убрать этот блок инициалицации после подключения БД
-  {
-    this.contacts.add(new Contact(-1, "Иван", "Иванов", "ivanov@mail.ru", "+70001234567"));
-    this.contacts.add(new Contact(0, "Ия", "Обст", "ia@mail.ru", "+70001234567"));
-  }
-
   @Override
   public List<Contact> findAll() {
-    log.debug("Call findAll in RamContactRepository.");
+    log.debug("Call ramContactRepository.findAll()");
     return this.contacts;
   }
 
   @Override
   public Optional<Contact> findById(int id) {
-    log.debug("Call findById in RamContactRepository. Id is {}.", id);
+    log.debug("Call ramContactRepository.findById({}).", id);
     return this.contacts.stream()
         .filter(contact -> (contact.getId() == id))
         .findFirst();
@@ -37,7 +31,7 @@ public class RamContactRepository implements ContactRepository {
 
   @Override
   public Contact save(Contact contact) {
-    log.debug("Call save in RamContactRepository. Contact is {}.", contact);
+    log.debug("Call ramContactRepository.save({})", contact);
     contact.setId(this.lastId++);
     this.contacts.add(contact);
     return contact;
@@ -45,7 +39,7 @@ public class RamContactRepository implements ContactRepository {
 
   @Override
   public @Nullable Contact update(Contact contact) {
-    log.debug("Call update in RamContactRepository. Contact is {}.", contact);
+    log.debug("Call ramContactRepository.update({})", contact);
     Contact targetContact = this.findById(contact.getId()).orElse(null);
     if (targetContact != null) {
       targetContact.setFirstName(contact.getFirstName());
@@ -58,7 +52,7 @@ public class RamContactRepository implements ContactRepository {
 
   @Override
   public void deleteById(int id) {
-    log.debug("Call deleteById in RamContactRepository. Id is {}.", id);
+    log.debug("Call ramContactRepository.deleteById({})", id);
     this.findById(id).ifPresent(this.contacts::remove);
   }
 

@@ -17,31 +17,31 @@ public class ContactServiceImpl implements ContactService {
 
   @Override
   public List<Contact> findAll() {
-    log.debug("Call findAll in ContactServiceImpl.");
+    log.debug("Call contactServiceImpl.findAll()");
     return this.contactRepository.findAll();
   }
 
   @Override
   public @Nullable Contact findById(int id) {
-    log.debug("Call findById in ContactServiceImpl. Id is {}.", id);
+    log.debug("Call contactServiceImpl.findById({})", id);
     return this.contactRepository.findById(id).orElse(null);
   }
 
   @Override
   public Contact save(Contact contact) {
-    log.debug("Call save in ContactServiceImpl. Contact is {}.", contact);
+    log.debug("Call contactServiceImpl.save({})", contact);
     return this.contactRepository.save(contact);
   }
 
   @Override
   public @Nullable Contact update(Contact contact) {
-    log.debug("Call update in ContactServiceImpl. Contact is {}.", contact);
+    log.debug("Call contactServiceImpl.update({})", contact);
     return this.contactRepository.update(contact);
   }
 
   @Override
   public void deleteById(int id) {
-    log.debug("Call deleteById in ContactServiceImpl. Id is {}.", id);
+    log.debug("Call contactServiceImpl.deleteById({})", id);
     this.contactRepository.deleteById(id);
   }
 

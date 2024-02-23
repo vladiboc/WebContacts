@@ -5,5 +5,12 @@ logging:
   level:
     org:
       example:
-        webcontacts:
-          repository: DEBUG
+        webcontacts: DEBUG
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/contacts
+    username: contacts
+    password: CONTACTS_password
+    hikari:
+      schema: contacts_schema

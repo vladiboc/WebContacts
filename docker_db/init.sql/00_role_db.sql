@@ -1,0 +1,2 @@
+CREATE ROLE contacts LOGIN PASSWORD 'CONTACTS_password';
+ALTER DATABASE contacts OWNER TO contacts;
