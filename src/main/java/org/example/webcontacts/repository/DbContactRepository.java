@@ -26,7 +26,7 @@ public class DbContactRepository implements ContactRepository {
   public List<Contact> findAll() {
     log.debug("Call dbContactRepository.findAll()");
 
-    final String sql = "SELECT * FROM contacts";
+    final String sql = "SELECT * FROM contacts ORDER BY id";
 
     return this.jdbcTemplate.query(sql, new ContactRowMapper());
   }
@@ -65,10 +65,10 @@ public class DbContactRepository implements ContactRepository {
       jdbcTemplate.update(
           sql, contact.getFirstName(), contact.getLastName(), contact.getEmail(), contact.getPhone(), contact.getId()
       );
+      return targetContact;
     }
     log.warn("dbContactRepository.update({}): Contact with id:{} not found!", contact, contact.getId());
-
-    return targetContact;
+    return null;
   }
 
   @Override
