@@ -3,7 +3,7 @@ package org.example.webcontacts.repository;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mapper.ContactRowMapper;
+import org.example.webcontacts.mapper.ContactRowMapper;
 import org.example.webcontacts.data.Contact;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.support.DataAccessUtils;

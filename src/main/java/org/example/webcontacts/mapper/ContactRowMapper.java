@@ -1,4 +1,4 @@
-package mapper;
+package org.example.webcontacts.mapper;
 
 import org.example.webcontacts.data.Contact;
 import org.springframework.jdbc.core.RowMapper;
